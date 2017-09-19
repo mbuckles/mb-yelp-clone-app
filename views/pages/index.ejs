@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/header.ejs %>
+</head>
+<body>
+      <div class="container-fluid">
+        <div class="jumbotron text-center">
+            <h1>Welcome To My Yelp Clone</h1>
+            <h2><p>Login with <i class="fa fa-twitter" aria-hidden="true"></i> and then select if you are going or even add your own favorite bar.</p></h2>
+            <h3><span class="fa fa-lock"></span> Login or Register with:</h3>
+            <a href="/auth/twitter"><img src="http://www.niftybuttons.com/ChrisWallace_Large/twitter.png " title="(Morty Buckles Twitter) " border="0 " style="margin:1px; "></a>
+        </div>
+            <hr>
+        </div>
+        <div class="container-fluid text-center">
+          <div id="info"></div>
+          <div class="grid" style="position: relative; height: 184px;">
+            <div class="grid-sizer"></div>
+          </div>
+        </div>
+      </div>
+      <footer>
+      <script>
+      var allBars = <%- JSON.stringify(allbars) %>;
+      console.log(allBars);
+      for(var i = 0; i < allBars.length; i++){
+            var htmlCards = '<div class="grid-item"><div class="card">';
+            htmlCards += '<div class="img-wrapper"><img src="'+allBars[i].image_url+'" class="img-responsive img-rounded" onerror="imgError(this);"><div class="text-bottom">' +allBars[i].name+'<br>' +allBars[i].location+'<br>Ph: ' +allBars[i].display_phone+'<br>Rating: ' +allBars[i].yelp_rating+' (Review Count:' +allBars[i].review_count+')<br><a href="'+allBars[i].url+'" target="blank">  Go To Website</a></div></div>';
+            $('.grid').append(htmlCards);
+          }
+      if(allBars.length == 0){
+        $('#info').append("You have no bars.")
+      }
+      setTimeout(function(){
+      $('.grid').masonry({
+        // set itemSelector so .grid-sizer is not used in layout
+        itemSelector: '.grid-item',
+        // use element for option
+        columnWidth: '.grid-sizer',
+        percentPosition: true
+      });
+      }, 200);
+      function imgError(image) {
+            image.onerror = "";
+            image.src = "http://www.avsforum.com/photopost/data/2277869/9/9f/9f50538d_test.jpeg";
+            return true;
+        }
+        </script>
+        <% include ../partials/footer.ejs %>
+      </footer>
+ </body>
+</html>
